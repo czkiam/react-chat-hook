@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Launcher } from './Launcher';
+import { Launcher } from './components';
 import messageHistory from './messageHistory';
 import TestArea from './TestArea';
 import Header from './Header';
