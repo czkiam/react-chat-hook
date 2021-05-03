@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
-function TestArea() {
+function TestArea({ onMessage }) {
+  const textAreaInput = useRef(null);
   return (
     <div className='demo-test-area--wrapper'>
       <div className='demo-test-area--title'>
@@ -13,17 +14,15 @@ function TestArea() {
         className='demo-test-area'
         onSubmit={(e) => {
           e.preventDefault();
-          this.props.onMessage(this.textArea.value);
-          this.textArea.value = '';
+          onMessage(textAreaInput.current.value);
+          textAreaInput.current.value = '';
         }}
       >
         <div className='demo-test-area--preamble'>
           Test the chat window by sending a message:
         </div>
         <textarea
-          ref={(e) => {
-            this.textArea = e;
-          }}
+          ref={textAreaInput}
           className='demo-test-area--text'
           placeholder='Write a test message....'
         />
