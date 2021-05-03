@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Launcher} from './Launcher';
+import React, { useState } from 'react';
+import { Launcher } from './Launcher';
 import messageHistory from './messageHistory';
 import TestArea from './TestArea';
 import Header from './Header';
@@ -7,79 +7,117 @@ import Footer from './Footer';
 import monsterImgUrl from './assets/monster.png';
 import './assets/styles';
 
-export default class App extends Component {
+function App() {
+  const [messageList, setMessageList] = useState(messageHistory);
+  const [newMessagesCount, setNewMessagesCount] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
-  constructor() {
-    super();
-    this.state = {
-      messageList: messageHistory,
-      newMessagesCount: 0,
-      isOpen: false
-    };
-  }
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     messageList: messageHistory,
+  //     newMessagesCount: 0,
+  //     isOpen: false
+  //   };
+  // }
 
-  _onMessageWasSent(message) {
-    this.setState({
-      messageList: [...this.state.messageList, message]
-    });
-  }
+  const _onMessageWasSent = (message) => {
+    setMessageList([...messageList, message]);
+    // this.setState({
+    //   messageList: [...this.state.messageList, message],
+    // });
+  };
 
-  _onFilesSelected(fileList) {
+  const _onFilesSelected = (fileList) => {
     const objectURL = window.URL.createObjectURL(fileList[0]);
-    this.setState({
-      messageList: [...this.state.messageList, {
-        type: 'file', author: 'me',
+
+    setMessageList([
+      ...messageList,
+      {
+        type: 'file',
+        author: 'me',
         data: {
           url: objectURL,
-          fileName: fileList[0].name
-        }
-      }]
-    });
-  }
+          fileName: fileList[0].name,
+        },
+      },
+    ]);
 
-  _sendMessage(text) {
+    // this.setState({
+    //   messageList: [
+    //     ...this.state.messageList,
+    //     {
+    //       type: 'file',
+    //       author: 'me',
+    //       data: {
+    //         url: objectURL,
+    //         fileName: fileList[0].name,
+    //       },
+    //     },
+    //   ],
+    // });
+  };
+
+  const _sendMessage = (text) => {
     if (text.length > 0) {
-      const newMessagesCount = this.state.isOpen ? this.state.newMessagesCount : this.state.newMessagesCount + 1;
-      this.setState({
-        newMessagesCount: newMessagesCount,
-        messageList: [...this.state.messageList, {
+      const count = isOpen
+        ? newMessagesCount
+        : newMessagesCount + 1;
+
+      setNewMessagesCount(count);
+      setMessageList([
+        ...messageList,
+        {
           author: 'them',
           type: 'text',
-          data: { text }
-        }]
-      });
+          data: { text },
+        },
+      ]);
+      // this.setState({
+      //   newMessagesCount: newMessagesCount,
+      //   messageList: [
+      //     ...this.state.messageList,
+      //     {
+      //       author: 'them',
+      //       type: 'text',
+      //       data: { text },
+      //     },
+      //   ],
+      // });
     }
-  }
+  };
 
-  _handleClick() {
-    this.setState({
-      isOpen: !this.state.isOpen,
-      newMessagesCount: 0
-    });
-  }
+  const _handleClick = () => {
+    setIsOpen(!isOpen);
+    setNewMessagesCount(0);
+    // this.setState({
+    //   isOpen: !this.state.isOpen,
+    //   newMessagesCount: 0,
+    // });
+  };
 
-  render() {
-    return <div>
+  return (
+    <div>
       <Header />
-      <TestArea
-        onMessage={this._sendMessage.bind(this)}
-      />
+      <TestArea onMessage={_sendMessage} />
       <Launcher
         agentProfile={{
           teamName: 'react-chat-window',
-          imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
+          imageUrl:
+            'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png',
         }}
-        onMessageWasSent={this._onMessageWasSent.bind(this)}
-        onFilesSelected={this._onFilesSelected.bind(this)}
-        messageList={this.state.messageList}
-        newMessagesCount={this.state.newMessagesCount}
-        handleClick={this._handleClick.bind(this)}
-        isOpen={this.state.isOpen}
+        onMessageWasSent={_onMessageWasSent}
+        onFilesSelected={_onFilesSelected}
+        messageList={messageList}
+        newMessagesCount={newMessagesCount}
+        handleClick={_handleClick}
+        isOpen={isOpen}
         showEmoji={false}
       />
-      <img className="demo-monster-img" src={monsterImgUrl} />
+      <img className='demo-monster-img' src={monsterImgUrl} alt={''} />
       <Footer />
-    </div>;
-  }
+    </div>
+  );
 }
 
+export default App;
