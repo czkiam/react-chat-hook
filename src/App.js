@@ -12,20 +12,8 @@ function App() {
   const [newMessagesCount, setNewMessagesCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     messageList: messageHistory,
-  //     newMessagesCount: 0,
-  //     isOpen: false
-  //   };
-  // }
-
   const _onMessageWasSent = (message) => {
     setMessageList([...messageList, message]);
-    // this.setState({
-    //   messageList: [...this.state.messageList, message],
-    // });
   };
 
   const _onFilesSelected = (fileList) => {
@@ -42,20 +30,6 @@ function App() {
         },
       },
     ]);
-
-    // this.setState({
-    //   messageList: [
-    //     ...this.state.messageList,
-    //     {
-    //       type: 'file',
-    //       author: 'me',
-    //       data: {
-    //         url: objectURL,
-    //         fileName: fileList[0].name,
-    //       },
-    //     },
-    //   ],
-    // });
   };
 
   const _sendMessage = (text) => {
@@ -73,27 +47,12 @@ function App() {
           data: { text },
         },
       ]);
-      // this.setState({
-      //   newMessagesCount: newMessagesCount,
-      //   messageList: [
-      //     ...this.state.messageList,
-      //     {
-      //       author: 'them',
-      //       type: 'text',
-      //       data: { text },
-      //     },
-      //   ],
-      // });
     }
   };
 
   const _handleClick = () => {
     setIsOpen(!isOpen);
     setNewMessagesCount(0);
-    // this.setState({
-    //   isOpen: !this.state.isOpen,
-    //   newMessagesCount: 0,
-    // });
   };
 
   return (

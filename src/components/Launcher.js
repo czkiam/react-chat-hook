@@ -1,72 +1,53 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import ChatWindow from './ChatWindow';
 import launcherIcon from './../assets/logo-no-bg.svg';
 import incomingMessageSound from './../assets/sounds/notification.mp3';
 import launcherIconActive from './../assets/close-icon.png';
 
-class Launcher extends Component {
-  constructor() {
-    super();
-    this.state = {
-      launcherIcon,
-      isOpen: false,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.mute) {
+function Launcher(props) {
+  useEffect(() => {
+    if (props.mute) {
       return;
     }
-    const nextMessage = nextProps.messageList[nextProps.messageList.length - 1];
+    const nextMessage = props.messageList[props.messageList?.length - 1];
     const isIncoming = (nextMessage || {}).author === 'them';
-    const isNew = nextProps.messageList.length > this.props.messageList.length;
+    const isNew = true; //TODO: check Message length (compare last and current), useref
     if (isIncoming && isNew) {
-      this.playIncomingMessageSound();
+      playIncomingMessageSound();
     }
-  }
+  }, [props.messageList, props.mute]);
 
-  playIncomingMessageSound() {
+  const playIncomingMessageSound = () => {
     var audio = new Audio(incomingMessageSound);
     audio.play();
-  }
+  };
 
-  handleClick() {
-    if (this.props.handleClick !== undefined) {
-      this.props.handleClick();
-    } else {
-      this.setState({
-        isOpen: !this.state.isOpen,
-      });
+  const handleClick = () => {
+    if (props.handleClick !== undefined) {
+      props.handleClick();
     }
-  }
-  render() {
-    const isOpen = this.props.hasOwnProperty('isOpen')
-      ? this.props.isOpen
-      : this.state.isOpen;
-    const classList = ['sc-launcher', isOpen ? 'opened' : ''];
-    return (
-      <div id='sc-launcher'>
-        <div
-          className={classList.join(' ')}
-          onClick={this.handleClick.bind(this)}
-        >
-          <MessageCount count={this.props.newMessagesCount} isOpen={isOpen} />
-          <img className={'sc-open-icon'} src={launcherIconActive} alt={""}/>
-          <img className={'sc-closed-icon'} src={launcherIcon} alt={""}/>
-        </div>
-        <ChatWindow
-          messageList={this.props.messageList}
-          onUserInputSubmit={this.props.onMessageWasSent}
-          onFilesSelected={this.props.onFilesSelected}
-          agentProfile={this.props.agentProfile}
-          isOpen={isOpen}
-          onClose={this.handleClick.bind(this)}
-          showEmoji={this.props.showEmoji}
-        />
+  };
+  const classList = ['sc-launcher', props.isOpen ? 'opened' : ''];
+
+  return (
+    <div id='sc-launcher'>
+      <div className={classList.join(' ')} onClick={handleClick}>
+        <MessageCount count={props.newMessagesCount} isOpen={props.isOpen} />
+        <img className={'sc-open-icon'} src={launcherIconActive} alt={''} />
+        <img className={'sc-closed-icon'} src={launcherIcon} alt={''} />
       </div>
-    );
-  }
+      <ChatWindow
+        messageList={props.messageList}
+        onUserInputSubmit={props.onMessageWasSent}
+        onFilesSelected={props.onFilesSelected}
+        agentProfile={props.agentProfile}
+        isOpen={props.isOpen}
+        onClose={handleClick}
+        showEmoji={props.showEmoji}
+      />
+    </div>
+  );
 }
 
 const MessageCount = (props) => {
