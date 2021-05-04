@@ -116,13 +116,13 @@ function UserInput(props) {
     if (inputHasText) {
       return (
         <div className='sc-user-input--button'>
-          <SendIcon onClick={_submitText.bind(this)} />
+          <SendIcon onClick={_submitText} />
         </div>
       );
     }
     return (
       <div className='sc-user-input--button'>
-        <FileIcon onClick={_showFilePicker.bind(this)} />
+        <FileIcon onClick={_showFilePicker} />
         <input
           type='file'
           name='files[]'
@@ -146,8 +146,8 @@ function UserInput(props) {
           setInputActive(false);
         }}
         ref={userInput}
-        onKeyDown={handleKeyDown.bind(this)}
-        onKeyUp={handleKeyUp.bind(this)}
+        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
         contentEditable='true'
         placeholder='Write a reply...'
         className='sc-user-input--text'
