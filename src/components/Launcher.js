@@ -44,7 +44,6 @@ function Launcher(props) {
         agentProfile={props.agentProfile}
         isOpen={props.isOpen}
         onClose={handleClick}
-        showEmoji={props.showEmoji}
       />
     </div>
   );
@@ -65,12 +64,10 @@ Launcher.propTypes = {
   handleClick: PropTypes.func,
   messageList: PropTypes.arrayOf(PropTypes.object),
   mute: PropTypes.bool,
-  showEmoji: PropTypes.bool,
 };
 
 Launcher.defaultProps = {
   newMessagesCount: 0,
-  showEmoji: true,
 };
 
 export default Launcher;

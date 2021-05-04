@@ -71,7 +71,6 @@ function App() {
         newMessagesCount={newMessagesCount}
         handleClick={_handleClick}
         isOpen={isOpen}
-        showEmoji={true}
       />
       <img className='demo-monster-img' src={monsterImgUrl} alt={''} />
       <Footer />

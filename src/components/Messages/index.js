@@ -1,7 +1,5 @@
 import React from 'react';
 import TextMessage from './TextMessage';
-import EmojiMessage from './EmojiMessage';
-import FileMessage from './FileMessage';
 import chatIconUrl from './../../assets/chat-icon.svg';
 
 function Message(props) {
@@ -15,12 +13,8 @@ function Message(props) {
     switch (type) {
       case 'text':
         return <TextMessage {...props.message} />;
-      case 'emoji':
-        return <EmojiMessage {...props.message} />;
-      case 'file':
-        return <FileMessage {...props.message} />;
       default:
-        console.error(
+        console.log(
           `Attempting to load message with unsupported file type '${type}'`,
         );
     }

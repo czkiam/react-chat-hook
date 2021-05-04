@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SendIcon(props) {
+function SendIconButton(props) {
   return (
     <button
       onFocus={props.onFocus}
@@ -35,4 +35,4 @@ function SendIcon(props) {
   );
 }
 
-export default SendIcon;
+export default SendIconButton;

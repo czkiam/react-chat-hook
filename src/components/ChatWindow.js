@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import MessageList from './MessageList';
 import UserInput from './UserInput';
-import Header from './Header';
 
 function ChatWindow(props) {
   let messageList = props.messageList || [];
@@ -12,25 +11,14 @@ function ChatWindow(props) {
     props.onUserInputSubmit(message);
   };
 
-  const onFilesSelected = (filesList) => {
-    props.onFilesSelected(filesList);
-  };
-
   return (
     <div className={classList.join(' ')}>
-      <Header
-        teamName={props.agentProfile.teamName}
-        imageUrl={props.agentProfile.imageUrl}
-        onClose={props.onClose}
-      />
       <MessageList
         messages={messageList}
         imageUrl={props.agentProfile.imageUrl}
       />
       <UserInput
         onSubmit={onUserInputSubmit}
-        onFilesSelected={onFilesSelected}
-        showEmoji={props.showEmoji}
       />
     </div>
   );
@@ -42,7 +30,6 @@ ChatWindow.propTypes = {
   onClose: PropTypes.func.isRequired,
   onFilesSelected: PropTypes.func,
   onUserInputSubmit: PropTypes.func.isRequired,
-  showEmoji: PropTypes.bool,
 };
 
 export default ChatWindow;
