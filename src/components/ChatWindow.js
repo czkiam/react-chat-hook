@@ -22,11 +22,11 @@ class ChatWindow extends Component {
     let classList = ['sc-chat-window', this.props.isOpen ? 'opened' : 'closed'];
     return (
       <div className={classList.join(' ')}>
-        {/* <Header
+        <Header
           teamName={this.props.agentProfile.teamName}
           imageUrl={this.props.agentProfile.imageUrl}
           onClose={this.props.onClose}
-        /> */}
+        />
         <MessageList
           messages={messageList}
           imageUrl={this.props.agentProfile.imageUrl}
